@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Food System</title>
+  <script type="text/javascript" src="app.js"> </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css" rel="stylesheet" >
+</head>
+
+<body>
+<div>
+<h1>Create Food System</h1>
+<form class="ui form" method="POST" enctype="multipart/form-data">
+	<div class="field">
+		<label>Tittle</label>
+		<input name="title" id="name">
+	</div>
+    <div class="field">
+		<label>price</label>
+		<input name="title" id="price">
+	</div>
+	<div class="field">
+		<label>Image</label>
+		<input type="file" id="file">
+
+	<button class="ui blue submit button"  onclick="saveClick()" type="submit">Create</button>
+	
+</form>
+
+</div>
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA7Te3UhL274LTUmUA2szRkkfmK-JogsEQ",
+    authDomain: "food-system-cd439.firebaseapp.com",
+    databaseURL: "https://food-system-cd439.firebaseio.com",
+    projectId: "food-system-cd439",
+    storageBucket: "food-system-cd439.appspot.com",
+    messagingSenderId: "280686948339"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+ var firebaseRef = firebase.database().ref("food");
+let image =document.getElementById('file');
+
+function lagreURL(snap) {
+    let url = snap.downloadURL;
+    firebaseRef.push(url);
+}
+function lastup() {
+    let  bilde = this.files[0];
+
+    let file = firebase.storage().ref("image/"+ new Date());
+        file.put(bilde).then(lagreURL);
+}
+function vist(snap){
+    let url = snap.val();
+}
+image.onchange = lastup;
+firebaseRef.on("image/",vist);
+</script>
+</body>
+</html>
